@@ -7,7 +7,7 @@ use std::path::PathBuf;
 use dioxus::prelude::*;
 
 #[allow(unused_imports)]
-use crate::browserinfo::{BroInfo, Browser, UserAgent};
+use super::super::{BroInfo, Browser, UserAgent};
 
 #[allow(unused_imports)]
 use std::cell::RefCell;

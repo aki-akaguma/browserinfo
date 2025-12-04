@@ -93,7 +93,7 @@ impl BroInfo {
 //   git submodule update --init
 //
 static EXTRACTOR: std::sync::LazyLock<ua_parser::Extractor> = std::sync::LazyLock::new(|| {
-    let s = include_str!("../resources/regexes.yaml");
+    let s = include_str!("../../resources/regexes.yaml");
     let regexes: ua_parser::Regexes = serde_yaml::from_str(s).unwrap();
     ua_parser::Extractor::try_from(regexes).unwrap()
 });
