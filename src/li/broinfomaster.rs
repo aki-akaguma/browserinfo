@@ -102,15 +102,6 @@ static EXTRACTOR: std::sync::LazyLock<ua_parser::Extractor> = std::sync::LazyLoc
 fn get_extractor<'a>() -> Result<&'a ua_parser::Extractor<'a>> {
     Ok(&*EXTRACTOR)
 }
-/*
-#[allow(dead_code)]
-fn get_extractor<'a>() -> Result<ua_parser::Extractor<'a>> {
-    let s = include_str!("core/regexes.yaml");
-    let regexes: ua_parser::Regexes = serde_yaml::from_str(s)?;
-    let extractor = ua_parser::Extractor::try_from(regexes)?;
-    Ok(extractor)
-}
-*/
 
 #[allow(dead_code)]
 fn convert_from_user_agent(ua: &str) -> Result<Browser> {

@@ -15,64 +15,20 @@ rust-version = "1.90.0"
 repository = "https://github.com/aki-akaguma/broinfo"
 
 [dependencies]
-dioxus = { version = "0.7.1", features = ["fullstack"] }
-dioxus-desktop = { version = "0.7.1", optional=true }
-dioxus-logger = "0.7.1"
-
 anyhow = { version = "1.0" }
-reqwest = { version = "0.12", features = ["json"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 serde_yaml = "0.9"
 toml = "0.9"
 
-async-std = "*"
-web-time = "1.1.0"
-
-rusqlite = { version = "0.37", optional = true }
-hmac-sha256 = { version="1.1", optional = true }
-base64 = { version="0.22", optional = true }
-
-const-css-minify = { version="1.0", optional = true }
 static-web-minify = "1.0"
 regex = "1.12"
 ua-parser = "0.2"
 
-[target.'cfg(target_os = "android")'.dependencies]
-openssl = { version = "0.10", features = ["vendored"] }
-
-
 [features]
 default = []
-
-web = ["dioxus/web"]
-desktop = ["dioxus/desktop", "database", "dep:dioxus-desktop"]
-mobile = ["dioxus/mobile"]
-server = ["dioxus/server", "database"]
-
-#web = ["dioxus/web", "browserinfo/web"]
-#desktop = ["dioxus/desktop", "database", "dep:dioxus-desktop", "browserinfo/desktop"]
-#mobile = ["dioxus/mobile", "browserinfo/mobile"]
-#server = ["dioxus/server", "database", "browserinfo/server"]
-
-database = ["dep:rusqlite", "dep:hmac-sha256", "dep:base64"]
-
-next_backend = []
-backend_delay = []
-backend_text = []
-debian_build = ["inline_style", "desktop"]
-inline_style = ["dep:const-css-minify"]
-
-[[bin]]
-name = "browserinfo_main"
-path = "src/main.rs"
 
 [lib]
 name = "browserinfo"
 path = "src/lib.rs"
-
-#[workspace]
-#members = [
-#    "packages/browserinfo",
-#]
 
