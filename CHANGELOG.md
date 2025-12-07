@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * `.github`
 * `README.tpl`
 
+### Fixed
+* `clippy::useless_conversion`
+
 ### Deleted
 * component and backends: split to `browserinfocm`
 

@@ -250,7 +250,7 @@ mod test {
     #[test]
     fn test_user_agent_00() {
         let s0 = r#""#;
-        let browser = convert_from_user_agent(s0.into()).unwrap();
+        let browser = convert_from_user_agent(s0).unwrap();
         let target = concat!(
             r#"Browser { name: "", version: "", "#,
             r#"os: Some(Os { name: "", version: "" }), "#,
