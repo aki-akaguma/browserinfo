@@ -1,6 +1,7 @@
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
 
+/// This is information obtained with `javascript`
 #[derive(Serialize, Deserialize, Debug, Default, Clone)]
 pub struct BroInfo {
     pub basic: Basic,
@@ -16,17 +17,21 @@ pub struct Basic {
 //
 macro_rules! SingleTypeString {
     ($ty: ident) => {
+        /// new type idiom: a single type string
         #[derive(Serialize, Deserialize, Debug, Default, Clone)]
         pub struct $ty(String);
         impl $ty {
+            /// Creates an object containing one `String`.
             pub fn new(val: String) -> Self {
                 Self(val)
             }
-            #[allow(dead_code)]
+            //#[allow(dead_code)]
+            /// Returns true if self has a length of zero bytes.
             pub fn is_empty(&self) -> bool {
                 self.0.is_empty()
             }
-            #[allow(dead_code)]
+            //#[allow(dead_code)]
+            /// Returns a reference (`&str`) of the contained `String`.
             pub fn get(&self) -> &str {
                 self.0.as_str()
             }
@@ -49,6 +54,7 @@ macro_rules! SingleTypeString {
 SingleTypeString!(UserAgent);
 SingleTypeString!(Referrer);
 
+/// This is information obtained with `javascript`
 #[derive(Serialize, Deserialize, Debug, Default, Clone)]
 pub struct JsInfo {
     pub oscpu: String,
@@ -66,23 +72,33 @@ pub struct JsInfo {
     pub timezone: String,
 }
 
+/// The browser information.
+/// This is the information obtained by parsing `user agent`
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 pub struct Browser {
+    /// a browser name
     pub name: String,
+    /// a browser version
     pub version: String,
+    /// a operating system
     pub os: Option<Os>,
-    //// a device model
+    /// a device model
     pub device: String,
 }
 
+/// The operating system information.
+/// This is the information obtained by parsing `user agent`
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Os {
+    /// a operating system name
     pub name: String,
+    /// a operating system version
     pub version: String,
 }
 
 impl BroInfo {
-    #[allow(dead_code)]
+    /// Parses `user agent` and generates `Browser`.
+    //#[allow(dead_code)]
     pub fn to_browser(&self) -> Result<Browser> {
         convert_from_user_agent(self.basic.user_agent.get())
     }

@@ -7,23 +7,23 @@ description = """
 browser and hardware information.
 """
 keywords = ["webapp"]
-categories = ["desktop", "android"]
-#license = "MIT OR Apache-2.0"
+categories = ["javascript", "desktop", "android"]
+license = "MIT OR Apache-2.0"
 readme = "README.md"
-#build = "build.rs"
 rust-version = "1.90.0"
 repository = "https://github.com/aki-akaguma/broinfo"
 
 [dependencies]
-anyhow = { version = "1.0" }
+anyhow = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
 serde_yaml = "0.9"
-toml = "0.9"
-
 static-web-minify = "1.0"
-regex = "1.12"
 ua-parser = "0.2"
+
+[dev-dependencies]
+# for doc test
+dioxus-document = "0.7"
+serde_json = "1.0"
 
 [features]
 default = []
@@ -31,4 +31,3 @@ default = []
 [lib]
 name = "browserinfo"
 path = "src/lib.rs"
-
