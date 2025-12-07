@@ -1,13 +1,13 @@
 [package]
 name = "browserinfo"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["aki <aki.akaguma@hotmail.com>"]
 edition = "2021"
 description = """
 browser and hardware information.
 """
-keywords = ["webapp"]
-categories = ["javascript", "desktop", "android"]
+keywords = ["webapp", "javascript", "desktop", "android"]
+categories = ["web-programming"]
 license = "MIT OR Apache-2.0"
 readme = "README.md"
 rust-version = "1.90.0"
