@@ -31,6 +31,10 @@ function get_document_prop (prop, init_val) {
     }
 }
 
+function is_dark_mode() {
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
 function get_timezone() {
     // Intl.DateTimeFormat().resolvedOptions().timeZone;
     if (Intl) {
@@ -68,6 +72,7 @@ const v_device_pixcel_ratio = get_window_prop('devicePixelRatio', null);
 
 const v_has_local_storage = (typeof localStorage != 'undefined');
 const v_has_session_storage = (typeof sessionStorage != 'undefined');
+const v_is_dark_mode = is_dark_mode();
 const v_timezone = get_timezone();
 
 return {
@@ -90,6 +95,7 @@ return {
 
         has_local_storage: v_has_local_storage,
         has_session_storage: v_has_session_storage,
+        is_dark_mode: v_is_dark_mode,
         timezone: v_timezone,
     },
 };

@@ -69,6 +69,7 @@ pub struct JsInfo {
     pub device_pixcel_ratio: Option<f64>,
     pub has_local_storage: bool,
     pub has_session_storage: bool,
+    pub is_dark_mode: bool,
     pub timezone: String,
 }
 
@@ -237,12 +238,12 @@ mod test {
         let s = serde_json::to_string(&broinfo).unwrap();
         assert_eq!(
             s,
-            r#"{"basic":{"user_agent":"","referrer":""},"jsinfo":{"oscpu":"","platform":"","cpu_cores":null,"cookie_enabled":false,"user_language":"","device_memory":null,"screen_width":null,"screen_height":null,"screen_color_depth":null,"device_pixcel_ratio":null,"has_local_storage":false,"has_session_storage":false,"timezone":""}}"#
+            r#"{"basic":{"user_agent":"","referrer":""},"jsinfo":{"oscpu":"","platform":"","cpu_cores":null,"cookie_enabled":false,"user_language":"","device_memory":null,"screen_width":null,"screen_height":null,"screen_color_depth":null,"device_pixcel_ratio":null,"has_local_storage":false,"has_session_storage":false,"is_dark_mode":false,"timezone":""}}"#
         );
     }
     #[test]
     fn test_02() {
-        let s0 = r#"{"basic":{"user_agent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0","referrer":"http://test.test/xxxx.html"},"jsinfo":{"oscpu":"intel","platform":"Linux x86_64","cpu_cores":4,"cookie_enabled":true,"user_language":"ja_JP","device_memory":8,"screen_width":1480,"screen_height":960,"screen_color_depth":8,"device_pixcel_ratio":1.0,"has_local_storage":true,"has_session_storage":true,"timezone":"Asia/Tokyo"}}"#;
+        let s0 = r#"{"basic":{"user_agent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0","referrer":"http://test.test/xxxx.html"},"jsinfo":{"oscpu":"intel","platform":"Linux x86_64","cpu_cores":4,"cookie_enabled":true,"user_language":"ja_JP","device_memory":8,"screen_width":1480,"screen_height":960,"screen_color_depth":8,"device_pixcel_ratio":1.0,"has_local_storage":true,"has_session_storage":true,"is_dark_mode":true,"timezone":"Asia/Tokyo"}}"#;
         let broinfo: BroInfo = serde_json::from_str(s0).unwrap();
         let s = serde_json::to_string(&broinfo).unwrap();
         assert_eq!(s, s0);

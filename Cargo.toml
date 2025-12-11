@@ -1,6 +1,6 @@
 [package]
 name = "browserinfo"
-version = "0.1.2"
+version = "0.1.3"
 authors = ["aki <aki.akaguma@hotmail.com>"]
 edition = "2021"
 description = """

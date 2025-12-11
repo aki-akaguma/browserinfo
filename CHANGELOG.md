@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [0.1.3] (2025-12-11)
+### Added
+* `is_dark_mode` to `JsInfo``.
+
 ## [0.1.2] (2025-12-07)
 ### Added
 * `.github`
@@ -23,7 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 * first commit
 
-[Unreleased]: https://github.com/aki-akaguma/browserinfo/compare/v0.1.2..HEAD
+[Unreleased]: https://github.com/aki-akaguma/browserinfo/compare/v0.1.3..HEAD
+[0.1.3]: https://github.com/aki-akaguma/browserinfo/compare/v0.1.2..v0.1.3
 [0.1.2]: https://github.com/aki-akaguma/browserinfo/compare/v0.1.1..v0.1.2
 [0.1.1]: https://github.com/aki-akaguma/browserinfo/compare/v0.1.0..v0.1.1
 [0.1.0]: https://github.com/aki-akaguma/browserinfo/releases/tag/v0.1.0
