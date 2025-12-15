@@ -21,7 +21,7 @@ use browserinfo::{user_agent_js, UserAgent};
 let js_ua: &str = user_agent_js();
 let eval = document::eval(js_ua).await?;
 let json_str = eval.to_string();
-let user_agent: UserAgent = serde_json::from_str(&json_str)?;
+let user_agent = UserAgent::from_json_str(&json_str)?;
 ```
 
 #### browser info
@@ -32,7 +32,7 @@ use browserinfo::{broinfo_js, BroInfo, Browser};
 let js_bro: &str = broinfo_js();
 let eval = document::eval(js_bro).await?;
 let json_str = eval.to_string();
-let broinfo: BroInfo = serde_json::from_str(&json_str)?;
+let broinfo = BroInfo::from_json_str(&json_str)?;
 
 // Generate `Browser` from `UserAgent`
 let browser = broinfo.to_browser();

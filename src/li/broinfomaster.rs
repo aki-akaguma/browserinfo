@@ -2,13 +2,13 @@ use anyhow::Result;
 use serde::{Deserialize, Serialize};
 
 /// This is information obtained with `javascript`
-#[derive(Serialize, Deserialize, Debug, Default, Clone)]
+#[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
 pub struct BroInfo {
     pub basic: Basic,
     pub jsinfo: JsInfo,
 }
 
-#[derive(Serialize, Deserialize, Debug, Default, Clone)]
+#[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
 pub struct Basic {
     pub user_agent: UserAgent,
     pub referrer: Referrer,
@@ -18,19 +18,22 @@ pub struct Basic {
 macro_rules! SingleTypeString {
     ($ty: ident) => {
         /// new type idiom: a single type string
-        #[derive(Serialize, Deserialize, Debug, Default, Clone)]
+        #[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
         pub struct $ty(String);
         impl $ty {
             /// Creates an object containing one `String`.
             pub fn new(val: String) -> Self {
                 Self(val)
             }
-            //#[allow(dead_code)]
+            /// Creates an object from json string.
+            pub fn from_json_str(s: &str) -> Result<Self> {
+                let r = serde_json::from_str(s)?;
+                Ok(r)
+            }
             /// Returns true if self has a length of zero bytes.
             pub fn is_empty(&self) -> bool {
                 self.0.is_empty()
             }
-            //#[allow(dead_code)]
             /// Returns a reference (`&str`) of the contained `String`.
             pub fn get(&self) -> &str {
                 self.0.as_str()
@@ -55,7 +58,7 @@ SingleTypeString!(UserAgent);
 SingleTypeString!(Referrer);
 
 /// This is information obtained with `javascript`
-#[derive(Serialize, Deserialize, Debug, Default, Clone)]
+#[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
 pub struct JsInfo {
     pub oscpu: String,
     pub platform: String,
@@ -75,7 +78,7 @@ pub struct JsInfo {
 
 /// The browser information.
 /// This is the information obtained by parsing `user agent`
-#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+#[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
 pub struct Browser {
     /// a browser name
     pub name: String,
@@ -89,7 +92,7 @@ pub struct Browser {
 
 /// The operating system information.
 /// This is the information obtained by parsing `user agent`
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Default, Clone, PartialEq)]
 pub struct Os {
     /// a operating system name
     pub name: String,
@@ -104,6 +107,24 @@ impl BroInfo {
         convert_from_user_agent(self.basic.user_agent.get())
     }
 }
+
+macro_rules! ImplFromJsonStr {
+    ($ty: ident) => {
+        impl $ty {
+            /// Creates an object from json string.
+            pub fn from_json_str(s: &str) -> Result<$ty> {
+                let r = serde_json::from_str(s)?;
+                Ok(r)
+            }
+        }
+    };
+}
+
+ImplFromJsonStr!(BroInfo);
+ImplFromJsonStr!(Basic);
+ImplFromJsonStr!(JsInfo);
+ImplFromJsonStr!(Browser);
+ImplFromJsonStr!(Os);
 
 //
 // To get the latest `regexes.yaml` from the `ua` parser community:
@@ -240,6 +261,8 @@ mod test {
             s,
             r#"{"basic":{"user_agent":"","referrer":""},"jsinfo":{"oscpu":"","platform":"","cpu_cores":null,"cookie_enabled":false,"user_language":"","device_memory":null,"screen_width":null,"screen_height":null,"screen_color_depth":null,"device_pixcel_ratio":null,"has_local_storage":false,"has_session_storage":false,"is_dark_mode":false,"timezone":""}}"#
         );
+        let broinfo2 = BroInfo::from_json_str(&s).unwrap();
+        assert_eq!(broinfo2, broinfo);
     }
     #[test]
     fn test_02() {
@@ -247,6 +270,8 @@ mod test {
         let broinfo: BroInfo = serde_json::from_str(s0).unwrap();
         let s = serde_json::to_string(&broinfo).unwrap();
         assert_eq!(s, s0);
+        let broinfo2 = BroInfo::from_json_str(&s).unwrap();
+        assert_eq!(broinfo2, broinfo);
     }
     #[test]
     fn test_user_agent_00() {
