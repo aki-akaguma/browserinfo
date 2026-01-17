@@ -26,6 +26,14 @@ fmt:
 doc:
 	cargo doc
 
+minix: assets/min/broinfo.js assets/min/user_agent.js
+
+assets/min/broinfo.js: assets/js/broinfo.js
+	minix -i assets/js/broinfo.js -o assets/min/broinfo.js
+
+assets/min/user_agent.js: assets/js/user_agent.js
+	minix -i assets/js/user_agent.js -o assets/min/user_agent.js
+
 update-regexes: resources/regexes.yaml
 
 resources/regexes.yaml: core/regexes.yaml
