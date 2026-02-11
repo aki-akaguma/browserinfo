@@ -1,4 +1,4 @@
-
+{
 function get_navigator_prop (prop, init_val) {
     if (prop in navigator) {
         return eval("navigator." + prop);
@@ -99,4 +99,5 @@ return {
         timezone: v_timezone,
     },
 };
+}
 /* vim: set ts=4 sw=4 sts=0 expandtab: ### mode line for vim */
