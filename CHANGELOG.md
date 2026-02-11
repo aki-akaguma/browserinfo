@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [0.1.6] (2026-02-12)
+### Fixed
+* unreachable code after return statement: added all around `{}` on javascript
+
 ## [0.1.5] (2026-01-17)
 ### Added
 * `list` into `Makefile`
@@ -38,7 +42,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 * first commit
 
-[Unreleased]: https://github.com/aki-akaguma/browserinfo/compare/v0.1.5..HEAD
+[Unreleased]: https://github.com/aki-akaguma/browserinfo/compare/v0.1.6..HEAD
+[0.1.6]: https://github.com/aki-akaguma/browserinfo/compare/v0.1.5..v0.1.6
 [0.1.5]: https://github.com/aki-akaguma/browserinfo/compare/v0.1.4..v0.1.5
 [0.1.4]: https://github.com/aki-akaguma/browserinfo/compare/v0.1.3..v0.1.4
 [0.1.3]: https://github.com/aki-akaguma/browserinfo/compare/v0.1.2..v0.1.3
