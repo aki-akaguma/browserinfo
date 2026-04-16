@@ -69,7 +69,7 @@ pub struct JsInfo {
     pub screen_width: Option<i32>,
     pub screen_height: Option<i32>,
     pub screen_color_depth: Option<i32>,
-    pub device_pixcel_ratio: Option<f64>,
+    pub device_pixel_ratio: Option<f64>,
     pub has_local_storage: bool,
     pub has_session_storage: bool,
     pub is_dark_mode: bool,
@@ -108,23 +108,26 @@ impl BroInfo {
     }
 }
 
-macro_rules! ImplFromJsonStr {
-    ($ty: ident) => {
-        impl $ty {
-            /// Creates an object from json string.
-            pub fn from_json_str(s: &str) -> Result<$ty> {
-                let r = serde_json::from_str(s)?;
-                Ok(r)
-            }
-        }
-    };
+/// A trait for types that can be created from a JSON string.
+pub trait FromJsonStr: Sized {
+    /// Deserializes a JSON string into an instance of `Self`.
+    ///
+    /// # Errors
+    /// Returns an error if the JSON is malformed or doesn't match the expected structure.
+    fn from_json_str<'a>(s: &'a str) -> Result<Self>
+    where
+        Self: serde::Deserialize<'a>,
+    {
+        let r = serde_json::from_str(s)?;
+        Ok(r)
+    }
 }
 
-ImplFromJsonStr!(BroInfo);
-ImplFromJsonStr!(Basic);
-ImplFromJsonStr!(JsInfo);
-ImplFromJsonStr!(Browser);
-ImplFromJsonStr!(Os);
+impl FromJsonStr for BroInfo {}
+impl FromJsonStr for Basic {}
+impl FromJsonStr for JsInfo {}
+impl FromJsonStr for Browser {}
+impl FromJsonStr for Os {}
 
 //
 // To get the latest `regexes.yaml` from the `ua` parser community:
@@ -141,30 +144,40 @@ fn get_extractor<'a>() -> Result<&'a ua_parser::Extractor<'a>> {
     Ok(&*EXTRACTOR)
 }
 
+fn format_version<T: std::fmt::Display>(
+    major: Option<T>,
+    minor: Option<T>,
+    patch: Option<T>,
+    patch_minor: Option<T>,
+) -> String {
+    let version = if let Some(major_s) = major {
+        if let Some(minor_s) = minor {
+            if let Some(patch_s) = patch {
+                if let Some(patch_minor_s) = patch_minor {
+                    format!("{major_s}.{minor_s}.{patch_s}.{patch_minor_s}")
+                } else {
+                    format!("{major_s}.{minor_s}.{patch_s}")
+                }
+            } else {
+                format!("{major_s}.{minor_s}")
+            }
+        } else {
+            major_s.to_string()
+        }
+    } else {
+        String::new()
+    };
+    version
+}
+
 #[allow(dead_code)]
 fn convert_from_user_agent(ua: &str) -> Result<Browser> {
     let extractor = get_extractor()?;
     let (browser, os, device) = extractor.extract(ua);
 
-    let (name, version) = if let Some(browser) = browser {
-        let name = format!("{}", browser.family);
-        let version = if let Some(major) = browser.major {
-            if let Some(minor) = browser.minor {
-                if let Some(patch) = browser.patch {
-                    if let Some(patch_minor) = browser.patch_minor {
-                        format!("{major}.{minor}.{patch}.{patch_minor}")
-                    } else {
-                        format!("{major}.{minor}.{patch}")
-                    }
-                } else {
-                    format!("{major}.{minor}")
-                }
-            } else {
-                major.to_string()
-            }
-        } else {
-            String::new()
-        };
+    let (name, version) = if let Some(bro) = browser {
+        let name = format!("{}", bro.family);
+        let version = format_version(bro.major, bro.minor, bro.patch, bro.patch_minor);
         (name, version)
     } else {
         (String::new(), String::new())
@@ -172,23 +185,7 @@ fn convert_from_user_agent(ua: &str) -> Result<Browser> {
 
     let (os_name, os_version) = if let Some(os) = os {
         let os_name = format!("{}", os.os);
-        let os_version = if let Some(major) = os.major {
-            if let Some(minor) = os.minor {
-                if let Some(patch) = os.patch {
-                    if let Some(patch_minor) = os.patch_minor {
-                        format!("{major}.{minor}.{patch}.{patch_minor}")
-                    } else {
-                        format!("{major}.{minor}.{patch}")
-                    }
-                } else {
-                    format!("{major}.{minor}")
-                }
-            } else {
-                format!("{major}")
-            }
-        } else {
-            String::new()
-        };
+        let os_version = format_version(os.major, os.minor, os.patch, os.patch_minor);
         (os_name, os_version)
     } else {
         (String::new(), String::new())
@@ -259,14 +256,14 @@ mod test {
         let s = serde_json::to_string(&broinfo).unwrap();
         assert_eq!(
             s,
-            r#"{"basic":{"user_agent":"","referrer":""},"jsinfo":{"oscpu":"","platform":"","cpu_cores":null,"cookie_enabled":false,"user_language":"","device_memory":null,"screen_width":null,"screen_height":null,"screen_color_depth":null,"device_pixcel_ratio":null,"has_local_storage":false,"has_session_storage":false,"is_dark_mode":false,"timezone":""}}"#
+            r#"{"basic":{"user_agent":"","referrer":""},"jsinfo":{"oscpu":"","platform":"","cpu_cores":null,"cookie_enabled":false,"user_language":"","device_memory":null,"screen_width":null,"screen_height":null,"screen_color_depth":null,"device_pixel_ratio":null,"has_local_storage":false,"has_session_storage":false,"is_dark_mode":false,"timezone":""}}"#
         );
         let broinfo2 = BroInfo::from_json_str(&s).unwrap();
         assert_eq!(broinfo2, broinfo);
     }
     #[test]
     fn test_02() {
-        let s0 = r#"{"basic":{"user_agent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0","referrer":"http://test.test/xxxx.html"},"jsinfo":{"oscpu":"intel","platform":"Linux x86_64","cpu_cores":4,"cookie_enabled":true,"user_language":"ja_JP","device_memory":8,"screen_width":1480,"screen_height":960,"screen_color_depth":8,"device_pixcel_ratio":1.0,"has_local_storage":true,"has_session_storage":true,"is_dark_mode":true,"timezone":"Asia/Tokyo"}}"#;
+        let s0 = r#"{"basic":{"user_agent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:145.0) Gecko/20100101 Firefox/145.0","referrer":"http://test.test/xxxx.html"},"jsinfo":{"oscpu":"intel","platform":"Linux x86_64","cpu_cores":4,"cookie_enabled":true,"user_language":"ja_JP","device_memory":8,"screen_width":1480,"screen_height":960,"screen_color_depth":8,"device_pixel_ratio":1.0,"has_local_storage":true,"has_session_storage":true,"is_dark_mode":true,"timezone":"Asia/Tokyo"}}"#;
         let broinfo: BroInfo = serde_json::from_str(s0).unwrap();
         let s = serde_json::to_string(&broinfo).unwrap();
         assert_eq!(s, s0);

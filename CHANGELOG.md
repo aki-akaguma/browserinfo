@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+* `pub trait FromJsonStr`
+* `format_version()`: helper to DRY
 * `docs/review.md`
+
+### Changed
+* Remaned: `broinfomaster.rs` `browser.rs`
+
+### Fixed
+* typo: `device_pixcel_ratio` to `device_pixel_ratio`
 
 
 ## [0.1.6] (2026-02-12)

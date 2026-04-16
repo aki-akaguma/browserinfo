@@ -1,5 +1,5 @@
-mod broinfomaster;
-pub use broinfomaster::*;
+mod browser;
+pub use browser::*;
 
 /// Returns `javascript` to get the `user agent`.
 pub fn user_agent_js() -> &'static str {

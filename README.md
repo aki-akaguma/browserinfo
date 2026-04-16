@@ -29,6 +29,7 @@ let user_agent = UserAgent::from_json_str(&json_str)?;
 use dioxus_document as document;
 use browserinfo::{broinfo_js, BroInfo, Browser};
 
+use browserinfo::FromJsonStr;
 let js_bro: &str = broinfo_js();
 let eval = document::eval(js_bro).await?;
 let json_str = eval.to_string();
