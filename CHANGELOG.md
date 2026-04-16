@@ -12,7 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * `docs/review.md`
 
 ### Changed
-* Remaned: `broinfomaster.rs` `browser.rs`
+* javascript: `function get_timezone()` more simple
+* `eval("navigator." + prop)` to `navigator[prop]` in `assets/js/broinfo.js`
+* Renamed: `broinfomaster.rs` `browser.rs`
 
 ### Fixed
 * typo: `device_pixcel_ratio` to `device_pixel_ratio`

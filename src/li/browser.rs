@@ -370,7 +370,7 @@ mod test {
     }
     #[test]
     fn test_user_agent_on_android_emu4_01() {
-        // android-emu Pixcel_4 browser: chrome
+        // android-emu Pixel_4 browser: chrome
         let s0 = r#"Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Mobile Safari/537.36"#;
         let browser = convert_from_user_agent(s0).unwrap();
         let target = concat!(
@@ -382,7 +382,7 @@ mod test {
     }
     #[test]
     fn test_user_agent_on_android_emu4_02() {
-        // android-emu Pixcel_4 appli
+        // android-emu Pixel_4 appli
         let s0 = r#"Mozilla/5.0 (Linux; Android 11; sdk_gphone_x86_64 Build/RSR1.201211.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/141.0.7390.122 Mobile Safari/537.36"#;
         let browser = convert_from_user_agent(s0).unwrap();
         let target = concat!(
@@ -394,7 +394,7 @@ mod test {
     }
     #[test]
     fn test_user_agent_on_android_emu7_01() {
-        // android-emu Pixcel_7 browser: chrome
+        // android-emu Pixel_7 browser: chrome
         let s0 = r#"Mozilla/5.0 (Linux; Android 13; sdk_gphone64_x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36"#;
         let browser = convert_from_user_agent(s0).unwrap();
         let target = concat!(
@@ -406,7 +406,7 @@ mod test {
     }
     #[test]
     fn test_user_agent_on_android_emu7_02() {
-        // android-emu Pixcel_7 appli
+        // android-emu Pixel_7 appli
         let s0 = r#"Mozilla/5.0 (Linux; Android 13; sdk_gphone64_x86_64 Build/TE1A.240213.009; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/142.0.7444.102 Mobile Safari/537.36"#;
         let browser = convert_from_user_agent(s0).unwrap();
         let target = concat!(

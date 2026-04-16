@@ -1,7 +1,7 @@
 {
 function get_navigator_prop (prop, init_val) {
     if (prop in navigator) {
-        return eval("navigator." + prop);
+        return navigator[prop];
     } else {
         return init_val;
     }
