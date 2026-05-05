@@ -2,7 +2,7 @@
 name = "browserinfo"
 version = "0.1.7"
 authors = ["aki <aki.akaguma@hotmail.com>"]
-edition = "2021"
+edition = "2024"
 description = """
 browser and hardware information.
 """

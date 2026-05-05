@@ -150,7 +150,7 @@ fn format_version<T: std::fmt::Display>(
     patch: Option<T>,
     patch_minor: Option<T>,
 ) -> String {
-    let version = if let Some(major_s) = major {
+    if let Some(major_s) = major {
         if let Some(minor_s) = minor {
             if let Some(patch_s) = patch {
                 if let Some(patch_minor_s) = patch_minor {
@@ -166,8 +166,7 @@ fn format_version<T: std::fmt::Display>(
         }
     } else {
         String::new()
-    };
-    version
+    }
 }
 
 #[allow(dead_code)]
