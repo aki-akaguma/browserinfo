@@ -6,12 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+
+## [0.1.8] (2026-05-05)
 ### Changed
 * update to edition 2024
 
 ### Fixed
 * `clippy::let\_and\_return`
-
 
 ## [0.1.7] (2026-04-16)
 ### Added
@@ -52,7 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * `README.tpl`
 
 ### Fixed
-* `clippy::useless_conversion`
+* `clippy::useless\_conversion`
 
 ### Deleted
 * component and backends: split to `browserinfocm`
@@ -61,7 +63,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 * first commit
 
-[Unreleased]: https://github.com/aki-akaguma/browserinfo/compare/v0.1.7..HEAD
+[Unreleased]: https://github.com/aki-akaguma/browserinfo/compare/v0.1.8..HEAD
+[0.1.8]: https://github.com/aki-akaguma/browserinfo/compare/v0.1.7..v0.1.8
 [0.1.7]: https://github.com/aki-akaguma/browserinfo/compare/v0.1.6..v0.1.7
 [0.1.6]: https://github.com/aki-akaguma/browserinfo/compare/v0.1.5..v0.1.6
 [0.1.5]: https://github.com/aki-akaguma/browserinfo/compare/v0.1.4..v0.1.5
